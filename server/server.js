@@ -2,6 +2,8 @@ import config from './../config/config'
 import app from './express'
 import mongoose from 'mongoose'
 import socket from 'socket.io'
+import rootSocket from './middleware/socket.middleware'
+//import Product from './models/product.model'
 
 // Connection URL
 mongoose.Promise = global.Promise
@@ -18,19 +20,16 @@ const server =  app.listen(config.port, (err) => {
 })
 
 const io = socket(server)
-io.on('connection', function(socket) {
-  //io.emit('Server 2 Client Message', 'Welcome!' );
-  
-  
-  for(let i=0;i<10;i++){
-      setTimeout(function(){
-        socket.emit('server 2 client',i)
-      },1000*i)
-  }
-  // socket.on('client 2 server', function(message)      {
-  //   console.log(message);
-  //   //io.emit('Server 2 Client Message', message.toUpperCase() ); //upcase it
-  // });
+rootSocket(io)
 
-  console.log('for loop done')
-});
+// io.on('connection', function(socket) {
+//   console.log(socket.id);
+
+//     socket.on('disconnect', (reason) => {
+//         console.log(reason);
+//     });
+// });
+
+// Product.watch().on("change",(data)=>{
+//   io.emit('server 2 client',data)
+// })

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -34,22 +34,25 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home(){
   const classes = useStyles()
+  const [state,setState] = useState("")
   useEffect(()=>{
     console.log('home')
     const socket = socketIOClient('/')
-    socket.on('server 2 client',function(message){
-      console.log('from server',message)
+    socket.on('server 2 client',function(data){
+      console.log(data)
+      setState(data.fullDocument.name)
     })
-    // for(let i=0;i<10;i++){
-    //   socket.emit('client 2 server',i)
-    // }
+    socket.emit('userid',token)
+    return ()=>{
+      socket.close()
+    }
   },[])
 
 
     return (
         <Card className={classes.card}>
           <Typography variant="h6" className={classes.title}>
-            Home Page
+            {state}
           </Typography>
           <CardMedia className={classes.media} image={unicornbikeImg} title="Unicorn Bicycle"/>
           <Typography variant="body2" component="p" className={classes.credit} color="textSecondary">Photo by <a href="https://unsplash.com/@boudewijn_huysmans" target="_blank" rel="noopener noreferrer">Boudewijn Huysmans</a> on Unsplash</Typography>

@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 const CustomerSchema = new mongoose.Schema({
-  /***
-  Uncomment this section to define your own schema
-  
+
   name: {
     type: String,
     trim: true,
@@ -18,8 +16,10 @@ const CustomerSchema = new mongoose.Schema({
   hashed_password: {
     type: String,
     required: "Password is required"
-
-  ***/
+  },
+  subscriber:[
+    {type:mongoose.Schema.Types.ObjectId}
+  ],
 
   updated: Date,
   created: {

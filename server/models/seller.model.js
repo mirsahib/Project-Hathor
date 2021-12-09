@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
-const ShopSchema = new mongoose.Schema({
-  /***
-  Uncomment this section to define your own schema
-  
+const SellerSchema = new mongoose.Schema({
+ 
   name: {
     type: String,
     trim: true,
@@ -15,12 +13,12 @@ const ShopSchema = new mongoose.Schema({
     match: [/.+@.+..+/, 'Please fill a valid email address'],
     required: 'Email is required'
   },
-  hashed_password: {
+  password: {
     type: String,
     required: "Password is required"
+  },
 
-  ***/
-
+  
   updated: Date,
   created: {
     type: Date,
@@ -28,4 +26,4 @@ const ShopSchema = new mongoose.Schema({
   }
 })
 
-export default mongoose.model('Shop', ShopSchema)
+export default mongoose.model('Seller', SellerSchema)

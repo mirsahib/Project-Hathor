@@ -1,13 +1,13 @@
-import Shop from '../models/shop.model'
+import Seller from '../models/seller.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
 
 const create = async (req, res) => {
-  const shop = new Shop(req.body)
+  const seller = new Seller(req.body)
   try {
-    await shop.save()
+    await seller.save()
     return res.status(200).json({
-      message: "Shop created successfully!"
+      message: "Seller created successfully!"
     })
   } catch (err) {
     return res.status(400).json({
@@ -17,20 +17,20 @@ const create = async (req, res) => {
 }
 
 /**
- * Load shop and append to req.
+ * Load seller and append to req.
  */
-const shopByID = async (req, res, next, id) => {
+const sellerByID = async (req, res, next, id) => {
   try {
-    let shop = await Shop.findById(id)
-    if (!shop)
+    let seller = await Seller.findById(id)
+    if (!seller)
       return res.status('400').json({
-        error: "shop not found"
+        error: "seller not found"
       })
-    req.profile = shop
+    req.profile = seller
     next()
   } catch (err) {
     return res.status('400').json({
-      error: "Could not retrieve shop"
+      error: "Could not retrieve seller"
     })
   }
 }
@@ -43,8 +43,8 @@ const read = (req, res) => {
 
 const list = async (req, res) => {
   try {
-    let shops = await Shop.find()
-    res.json(shops)
+    let sellers = await Seller.find()
+    res.json(sellers)
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err)
@@ -54,13 +54,13 @@ const list = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    let shop = req.profile
-    shop = extend(shop, req.body)
-    shop.updated = Date.now()
-    await shop.save()
-    shop.hashed_password = undefined
-    shop.salt = undefined
-    res.json(shop)
+    let seller = req.profile
+    seller = extend(seller, req.body)
+    seller.updated = Date.now()
+    await seller.save()
+    seller.hashed_password = undefined
+    seller.salt = undefined
+    res.json(seller)
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err)
@@ -70,11 +70,11 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    let shop = req.profile
-    let deletedShop = await shop.remove()
-    deletedShop.hashed_password = undefined
-    deletedShop.salt = undefined
-    res.json(deletedShop)
+    let seller = req.profile
+    let deletedSeller = await seller.remove()
+    deletedSeller.hashed_password = undefined
+    deletedSeller.salt = undefined
+    res.json(deletedSeller)
   } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err)
@@ -84,7 +84,7 @@ const remove = async (req, res) => {
 
 export default {
   create,
-  shopByID,
+  sellerByID,
   read,
   list,
   remove,
