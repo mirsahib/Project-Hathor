@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import unicornbikeImg from './../assets/images/unicornbike.jpg'
+import socketIOClient from 'socket.io-client'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -33,6 +34,18 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home(){
   const classes = useStyles()
+  useEffect(()=>{
+    console.log('home')
+    const socket = socketIOClient('/')
+    socket.on('server 2 client',function(message){
+      console.log('from server',message)
+    })
+    // for(let i=0;i<10;i++){
+    //   socket.emit('client 2 server',i)
+    // }
+  },[])
+
+
     return (
         <Card className={classes.card}>
           <Typography variant="h6" className={classes.title}>
