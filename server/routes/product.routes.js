@@ -8,8 +8,6 @@ router.route('/api/product')
   .get(productCtrl.list)
   .post(productCtrl.create)
 
-// router.route('/api/product/watch')
-//   .get(productCtrl.watch)
 
 router.route('/api/product/:productId')
   .get(authCtrl.requireSignin, productCtrl.read)
