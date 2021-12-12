@@ -82,9 +82,6 @@ const remove = async (req, res) => {
   }
 }
 
-const subscribe = async(req,res) =>{
-  res.send('hello')
-}
 
 export default {
   create,
@@ -92,6 +89,5 @@ export default {
   read,
   list,
   remove,
-  update,
-  subscribe
+  update
 }

@@ -82,11 +82,16 @@ const remove = async (req, res) => {
   }
 }
 
+const subscribe = async(req,res) =>{
+  res.send('hello')
+}
+
 export default {
   create,
   sellerByID,
   read,
   list,
   remove,
-  update
+  update,
+  subscribe
 }
