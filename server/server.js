@@ -19,8 +19,8 @@ const server =  app.listen(config.port, (err) => {
   console.info('Server started on port %s.', config.port)
 })
 
-const io = socket(server)
-rootSocket(io)
+// const io = socket(server)
+// rootSocket(io)
 
 // io.on('connection', function(socket) {
 //   console.log(socket.id);
