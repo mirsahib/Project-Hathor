@@ -10,7 +10,7 @@ router.route('/api/seller')
 
 
 router.route('/api/seller/subscribe')
-  .post(customerCtrl.subscribe)
+  .post(sellerCtrl.subscribe)
 
 router.route('/api/seller/:sellerId')
   .get(authCtrl.requireSignin, sellerCtrl.read)
