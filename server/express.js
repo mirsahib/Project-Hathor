@@ -8,9 +8,9 @@ import helmet from 'helmet'
 import Template from './../template'
 import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
-import productRoutes from './routes/product.routes'
 import sellerRoutes from './routes/seller.routes'
 import customerRoutes from './routes/customer.routes'
+import orderRoutes from './routes/order.routes'
 
 // modules for server side rendering
 import React from 'react'
@@ -46,9 +46,9 @@ app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
 // mount routes
 app.use('/', userRoutes)
 app.use('/', authRoutes)
-app.use('/',productRoutes)
 app.use('/',sellerRoutes)
 app.use('/',customerRoutes)
+app.use('/',orderRoutes)
 
 app.get('*', (req, res) => {
   const sheets = new ServerStyleSheets()
