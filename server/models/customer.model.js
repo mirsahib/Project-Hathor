@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 import crypto from 'crypto'
 
 const CustomerSchema = new mongoose.Schema({
@@ -16,7 +16,7 @@ const CustomerSchema = new mongoose.Schema({
     required: 'Email is required'
   },
   orders:[
-    {type:Schema.Types.ObjectId,ref:'Order'}
+    {type:mongoose.Schema.Types.ObjectId,ref:'Order'}
   ],
   hashed_password: {
     type: String,

@@ -19,9 +19,12 @@ const SellerSchema = new mongoose.Schema({
     type: String,
     required: "Password is required"
   },
+  orders:[
+    {type:mongoose.Schema.Types.ObjectId,ref:'Order'}
+  ],
 
   observer:[
-    {type:mongoose.Schema.Types.ObjectId,ref:''}
+    {type:mongoose.Schema.Types.ObjectId,ref:'Customer'}
   ],// customer id observer by seller
 
   salt: String,
