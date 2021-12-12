@@ -8,6 +8,8 @@ router.route('/api/customer')
   .get(customerCtrl.list)
   .post(customerCtrl.create)
 
+router.route('/api/customer/order')
+  .post(customerCtrl.createOrder)
 
 router.route('/api/customer/:customerId')
   .get(authCtrl.requireSignin, customerCtrl.read)

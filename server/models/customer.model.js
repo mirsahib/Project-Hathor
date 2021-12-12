@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 const CustomerSchema = new mongoose.Schema({
 
   name: {
@@ -13,6 +13,9 @@ const CustomerSchema = new mongoose.Schema({
     match: [/.+@.+..+/, 'Please fill a valid email address'],
     required: 'Email is required'
   },
+  orders:[
+    {type:Schema.Types.ObjectId,ref:'Order'}
+  ],
   password: {
     type: String,
     required: "Password is required"
