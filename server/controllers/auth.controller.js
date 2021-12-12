@@ -1,26 +1,26 @@
-import User from '../models/user.model'
+import Seller from '../models/seller.model'
 import jwt from 'jsonwebtoken'
 import expressJwt from 'express-jwt'
 import config from './../../config/config'
 
 const signin = async (req, res) => {
   try {
-    let user = await User.findOne({
+    let seller = await Seller.findOne({
       "email": req.body.email
     })
-    if (!user)
+    if (!seller)
       return res.status('401').json({
-        error: "User not found"
+        error: "Seller not found"
       })
 
-    if (!user.authenticate(req.body.password)) {
+    if (!seller.authenticate(req.body.password)) {
       return res.status('401').send({
         error: "Email and password don't match."
       })
     }
 
     const token = jwt.sign({
-      _id: user._id
+      _id: seller._id
     }, config.jwtSecret)
 
     res.cookie("t", token, {
@@ -29,10 +29,10 @@ const signin = async (req, res) => {
 
     return res.json({
       token,
-      user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email
+      seller: {
+        _id: seller._id,
+        name: seller.name,
+        email: seller.email
       }
     })
 
@@ -61,7 +61,7 @@ const hasAuthorization = (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id
   if (!(authorized)) {
     return res.status('403').json({
-      error: "User is not authorized"
+      error: "Seller is not authorized"
     })
   }
   next()
