@@ -86,16 +86,12 @@ const remove = async (req, res) => {
 const subscribe = async(req,res) =>{
   if(Object.keys(req.body).length!=0){
     try {
-      const filter = {_id:req.body.customerId}
-      const update = {subscriber:req.body.subscriber}
+      const customerId = {_id:req.body.customerId}
+      const sellerId = {subscriber:req.body.subscriber}
       // add unique seller to the customer
-      let customer = await Customer.findOneAndUpdate(filter,{$addToSet:update})
-      if (!customer){
-        return res.status('400').json({
-          error: "customer not found"
-        })
-      }
-      console.log('mongodb response',customer)
+      let customer = await Customer.findOneAndUpdate(customerId,{$addToSet:sellerId})
+      let seller = await Seller.findOneAndUpdate({_id:req.body.subscriber},{$addToSet:{observer:req.body.customerId}})
+      console.log('mongodb response',customer ,seller)
       return res.status(201).json({message:"Successfully subscribed"})
     } catch (error) {
       console.log(error)
