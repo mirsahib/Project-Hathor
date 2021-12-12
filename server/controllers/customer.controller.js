@@ -1,4 +1,5 @@
 import Customer from '../models/customer.model'
+import Order from '../models/order.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
 
@@ -82,6 +83,24 @@ const remove = async (req, res) => {
   }
 }
 
+const createOrder = async (req, res) => {
+  const order = new Order(req.body)
+  const filter = {_id:req.body.customerId}
+  try {
+    await order.save()
+    await Customer.findOneAndUpdate(filter,{$push:{orders:order._id}})
+
+    return res.status(200).json({
+      message: "Order created successfully!"
+    })
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err)
+    })
+  }
+}
+
 
 export default {
   create,
@@ -89,5 +108,6 @@ export default {
   read,
   list,
   remove,
-  update
+  update,
+  createOrder
 }
