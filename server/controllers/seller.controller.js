@@ -1,4 +1,5 @@
 import Seller from '../models/seller.model'
+import Customer from '../models/customer.model'
 import extend from 'lodash/extend'
 import errorHandler from './../helpers/dbErrorHandler'
 
@@ -83,7 +84,28 @@ const remove = async (req, res) => {
 }
 
 const subscribe = async(req,res) =>{
-  res.send('hello')
+  if(Object.keys(req.body).length!=0){
+    try {
+      const filter = {_id:req.body.customerId}
+      const update = {subscriber:req.body.subscriber}
+      // add unique seller to the customer
+      let customer = await Customer.findOneAndUpdate(filter,{$addToSet:update})
+      if (!customer){
+        return res.status('400').json({
+          error: "customer not found"
+        })
+      }
+      console.log('mongodb response',customer)
+      return res.status(201).json({message:"Successfully subscribed"})
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+      })
+    }
+  }else{
+    res.status(204).json({error:'No content'})
+  }
 }
 
 export default {
