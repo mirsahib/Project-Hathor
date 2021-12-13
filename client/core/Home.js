@@ -35,18 +35,18 @@ const useStyles = makeStyles(theme => ({
 export default function Home(){
   const classes = useStyles()
   const [state,setState] = useState("")
-  useEffect(()=>{
-    console.log('home')
-    const socket = socketIOClient('/')
-    socket.on('server 2 client',function(data){
-      console.log(data)
-      setState(data.fullDocument.name)
-    })
-    socket.emit('userid',token)
-    return ()=>{
-      socket.close()
-    }
-  },[])
+  // useEffect(()=>{
+  //   console.log('home')
+  //   const socket = socketIOClient('/')
+  //   socket.on('server 2 client',function(data){
+  //     console.log(data)
+  //     setState(data.fullDocument.name)
+  //   })
+  //   socket.emit('userid',token)
+  //   return ()=>{
+  //     socket.close()
+  //   }
+  // },[])
 
 
     return (
