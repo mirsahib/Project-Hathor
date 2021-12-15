@@ -91,7 +91,6 @@ const subscribe = async(req,res) =>{
       // add unique seller to the customer
       let customer = await Customer.findOneAndUpdate(customerId,{$addToSet:sellerId})
       let seller = await Seller.findOneAndUpdate({_id:req.body.subscriber},{$addToSet:{observer:req.body.customerId}})
-      console.log('mongodb response',customer ,seller)
       return res.status(201).json({message:"Successfully subscribed"})
     } catch (error) {
       console.log(error)
