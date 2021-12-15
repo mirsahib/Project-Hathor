@@ -17,9 +17,7 @@ const rootSocket = (io)=>{
             loggedInUser[data.userId] = socket.id
             console.log('logged in user',loggedInUser)
         })
-
         //order stream change
-
         OrderChange.on('change',async function(change){
             let customerId = change.fullDocument.customerId
             let status = change.fullDocument.status
