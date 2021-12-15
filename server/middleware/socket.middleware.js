@@ -55,7 +55,14 @@ const rootSocket = (io)=>{
         })
         //end order stream change
         socket.on('disconnect', (reason) => {
-            console.log(reason);
+            //cleanup
+            Object.keys(loggedInUser).forEach(id=>{
+                if(loggedInUser[id]===socket.id){
+                    delete loggedInUser[id]
+                }
+            })
+            console.log('logged in user',loggedInUser)
+            console.log('logged out user',socket.id,'reason',reason)
             //delete loggedInUser[]
         });
     });
