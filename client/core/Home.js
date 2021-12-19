@@ -35,18 +35,26 @@ const useStyles = makeStyles(theme => ({
 export default function Home(){
   const classes = useStyles()
   const [state,setState] = useState("")
-  // useEffect(()=>{
-  //   console.log('home')
-  //   const socket = socketIOClient('/')
-  //   socket.on('server 2 client',function(data){
-  //     console.log(data)
-  //     setState(data.fullDocument.name)
-  //   })
-  //   socket.emit('userid',token)
-  //   return ()=>{
-  //     socket.close()
-  //   }
-  // },[])
+  useEffect(()=>{
+    console.log('home')
+    const socket = socketIOClient('/',{
+      reconnectionDelayMax: 10000,
+      auth: {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWI5YWU4NjdiNjMwYzhmZWJiNTdhYjEiLCJpYXQiOjE2Mzk1NTkwNDh9.eA_HQr_VNapRUdrhuAqzrcJbi7I7iv7iEOqxVButQxA"
+      },
+    })
+    // socket.on('server 2 client',function(data){
+    //   console.log(data)
+    //   setState(data.fullDocument.name)
+    // })
+    // socket.emit('userid',token)
+    socket.on('error',function(err){
+      console.log(err)
+    })
+    return ()=>{
+      socket.close()
+    }
+  },[])
 
 
     return (

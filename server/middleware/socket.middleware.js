@@ -2,6 +2,8 @@
 import Order from '../models/order.model'
 import Customer from '../models/customer.model'
 import Seller from '../models/seller.model'
+import jwt from 'jsonwebtoken'
+import config from '../../config/config'
 
 
 const pipeline = []
@@ -10,6 +12,20 @@ let OrderChange = Order.watch()
 const loggedInUser = {}
 
 const rootSocket = (io)=>{
+    io.use(function(socket,next){
+        let token = socket.handshake.auth.token || null
+        if(token){
+            jwt.verify(token,config.jwtSecret,function(err,decoded){
+                if(decoded){
+                    next()
+                }else{
+                    next(new Error(err.message));
+                }
+            })
+        }else{
+            next(new Error("token missing"));
+        }
+    })
     io.on('connection', function(socket) {
         console.log('socket id',socket.id);
         
